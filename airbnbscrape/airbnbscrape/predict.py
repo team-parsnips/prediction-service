@@ -1,10 +1,6 @@
 import json
 import numpy as np
 import pandas as pd
-import collections
-import pylab
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 import datetime as dt
 from pprint import pprint
 from sklearn import linear_model
@@ -15,7 +11,7 @@ from sklearn.model_selection import GridSearchCV
 
 class Predict():
 
-  def predict_price():
+  def predict_price(self):
     cols = ['accuracy_rating',
         'amenities',
         'bed_type',
@@ -35,18 +31,19 @@ class Predict():
         'room_type',
         'satisfaction_guest',
         'url']
-    df = pd.read_csv('../irvineAirbnb.csv', usecols=cols)
+    df = pd.read_csv('./irvineAirbnb.csv', usecols=cols)
     # filter for person_capacity
-    df = df[df.person_capacity == 2.0]
+    # df = df[df.person_capacity == 2.0]
 
     # get feature encoding for categorical variables
     bt_dummies = pd.get_dummies(df.bed_type)
     rt_dummies = pd.get_dummies(df.room_type)
-    #ib_dummies = pd.get_dummies(df.instant_book)
 
     # replace the old columns with new one-hot encoded ones and drop unused columns
-    alldata = pd.concat((df.drop(['accuracy_rating', 'bed_type', 'room_type', 'url', 'host_id', 'hosting_id', 'nightly_price', 'amenities'], axis=1), bt_dummies.astype(int), rt_dummies.astype(int)), axis=1)
+    alldata = pd.concat((df.drop(['accuracy_rating', 'bed_type', 'room_type', 'url', 'host_id', 'hosting_id', 'nightly_price', 'amenities', 'response_time'], axis=1), bt_dummies.astype(int), rt_dummies.astype(int)), axis=1)
     allcols = alldata.columns
+
+    print alldata.loc[0, :]
 
     # split data to training set
     X_train, X_test, y_train, y_test = train_test_split(alldata.drop(['price'], axis=1), alldata.price, test_size=0.2, random_state=20)
@@ -67,7 +64,7 @@ class Predict():
     preds = clf.fit(X_train, y_train)
     best = clf.best_estimator_
     # predict price based on characteristics
-    raw_input = [5, False, 2, 10, 10, 10, 1, 756, 94, 94, 0, 0, 1, 0, 1]
+    raw_input = [1, 96, 3, 10, 166, 12, 10, 1, 10, 1, 0, 1]
     input_data = np.array(raw_input).reshape(1, -1)
     best_predicted = best.predict(input_data)
     print 'best_predicted', best_predicted
