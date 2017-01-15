@@ -3,7 +3,7 @@ import scrapy
 import json
 import sys
 from airbnbscrape.items import BnbtutorialItem
-from '../predict/predict.py' import Predict
+from airbnbscrape.predict import Predict
 
 # QUERY = 'Portland-USA'
 
