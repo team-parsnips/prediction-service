@@ -3,6 +3,7 @@ import scrapy
 import json
 import sys
 from airbnbscrape.items import BnbtutorialItem
+from '../predict/predict.py' import Predict
 
 # QUERY = 'Portland-USA'
 
@@ -85,3 +86,5 @@ class BnbspiderSpider(scrapy.Spider):
 	
 	def closed (self, reason):
 		print ('yolo')
+		predictor = Predict()
+		return predictor.predict_price()
