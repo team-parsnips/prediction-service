@@ -25,6 +25,7 @@ class BnbspiderSpider(scrapy.Spider):
 			return
 		else:
 			page_urls = [response.url + '?page=' + str(pageNumber)
+				## If running production, uncomment full range and comment shortened range
 				# for pageNumber in range(1, last_page_number + 1)]
 				for pageNumber in range(1,2)]
 			for page_url in page_urls:

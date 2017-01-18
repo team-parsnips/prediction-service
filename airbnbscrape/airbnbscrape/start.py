@@ -1,20 +1,23 @@
 from flask import Flask
-
-# from spider import BnbspiderSpider
+from flask import request
 
 import subprocess
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-  cmd = ['scrapy', 'crawl', 'airspider', '-a', 'city=irvine', '-a', 'country=usa', '-o', 'irvineairbnb.csv']
+# Get request to python service needs to be structured '/scrape?city=<cityname>'
+@app.route('/scrape')
+def run_scraper():
+  city = request.args.get('city')
+  cmd = ['scrapy', 'crawl', 'airspider', '-a', 'city=' + city, '-a', 'country=usa', '-o', city + 'Airbnb.csv']
 
   return subprocess.check_output(cmd)
-  # subprocess.check_output(["echo", "Hello World!"])
-  # subprocess.CompletedProcess( args=['python', 'hello.py'], returncode=0 )
-    # with open('seattleairbnb.csv') as items_file:
-    #   return items_file.read()
+
+# If issues with prediction-server connecting in docker (exit 1 possibly)
+# Verify docker ip with command 'docker inspect <container id>' container needs to be running so run express server
+# Match host below with docker ip
+
+# If running production, set spider to all pages
 
 if __name__ == '__main__':
-  app.run()
+  app.run(host='172.20.0.2', port='5000')
