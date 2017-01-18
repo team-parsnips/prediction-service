@@ -16,19 +16,8 @@ RUN pip3 install -r requirements.txt
 # Get all the code needed to run the app
 COPY . /dock/service
 
-# WORKDIR /airbnbscrape/airbnbscrape
-
 # Expose the port the app runs in
 EXPOSE 5000
 
-
-
+# Run flask server
 CMD ["python3", "airbnbscrape/start.py"]
-
-
-
-# # Export the flask server
-# CMD ["export", "FLASK_APP=airbnbscrape/airbnbscrape/start.py"]
-
-# # Run flask server
-# CMD ["flask", "run"]
