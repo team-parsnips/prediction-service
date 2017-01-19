@@ -91,4 +91,4 @@ ENV/
 # Other
 **/.DS_Store
 .vscode/
-*.csv
+**.csv
