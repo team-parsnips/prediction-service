@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from airbnbscrape.predict import Predict
+from predict import Predict
 import json
 
 # from spider import BnbspiderSpider
@@ -37,4 +37,4 @@ def scrape_predict():
   return predict(request_body)
 
 if __name__ == '__main__':
-  app.run(threaded = True)
+  app.run(threaded = True, host='172.20.0.2', port='5000')

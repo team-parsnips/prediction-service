@@ -87,5 +87,5 @@ class Predict():
                 ]
     input_data = np.array(raw_input).reshape(1, -1)
     best_predicted = best.predict(input_data)
-    print np.array_str(best_predicted)
+    print (np.array_str(best_predicted))
     return np.array_str(best_predicted)
