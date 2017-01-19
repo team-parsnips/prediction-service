@@ -10,12 +10,16 @@ from airbnbscrape.predict import Predict
 class BnbspiderSpider(scrapy.Spider):
 	name = "airspider"
 	allowed_domains = ["airbnb.com"]
-	start_urls = ['http://airbnb.com/s/']
-	QUERY = []
+	# QUERY = self.city
+	# start_urls = ['http://airbnb.com/s/' + QUERY]
+	
 
 	def __init__(self, city='', country='', *args, **kwargs):
 		super(BnbspiderSpider, self).__init__(*args, **kwargs)
-		self.QUERY = city + '--' + country
+		# self.QUERY = city + '--' + country
+		# self.QUERY = city + '--' + country
+		self.start_urls = ['http://airbnb.com/s/%s--USA' % city]
+		# print ('self query is', self.QUERY)
 
 	def parse(self, response):
 		#get the last page number on the page
@@ -27,7 +31,7 @@ class BnbspiderSpider(scrapy.Spider):
 			page_urls = [response.url + '?page=' + str(pageNumber)
 				## If running production, uncomment full range and comment shortened range
 				# for pageNumber in range(1, last_page_number + 1)]
-				for pageNumber in range(1,2)]
+				for pageNumber in range(1,5)]
 			for page_url in page_urls:
 				yield scrapy.Request(page_url, callback=self.parse_listing_results_page)
 	
@@ -86,6 +90,4 @@ class BnbspiderSpider(scrapy.Spider):
 		yield item
 	
 	def closed (self, reason):
-		print ('yolo')
-		predictor = Predict()
-		return predictor.predict_price()
+		return
