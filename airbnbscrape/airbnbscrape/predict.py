@@ -36,7 +36,7 @@ class Predict():
 
     # read scraped csv and then delete the csv
     df = pd.read_csv('./airbnb.csv', usecols=cols)
-    # os.remove('./airbnb.csv')
+    os.remove('./airbnb.csv')
 
     # filter for person_capacity
     df = df[df.person_capacity == params['person_capacity']]
