@@ -18,7 +18,7 @@ class BnbspiderSpider(scrapy.Spider):
 		super(BnbspiderSpider, self).__init__(*args, **kwargs)
 		# self.QUERY = city + '--' + country
 		# self.QUERY = city + '--' + country
-		self.start_urls = ['http://airbnb.com/s/%s--USA' % city]
+		self.start_urls = ['http://airbnb.com/s/%s' % city]
 		# print ('self query is', self.QUERY)
 
 	def parse(self, response):
@@ -30,8 +30,8 @@ class BnbspiderSpider(scrapy.Spider):
 		else:
 			page_urls = [response.url + '?page=' + str(pageNumber)
 				## If running production, uncomment full range and comment shortened range
-				# for pageNumber in range(1, last_page_number + 1)]
-				for pageNumber in range(1,5)]
+				for pageNumber in range(1, last_page_number + 1)]
+				# for pageNumber in range(1,5)]
 			for page_url in page_urls:
 				yield scrapy.Request(page_url, callback=self.parse_listing_results_page)
 	
