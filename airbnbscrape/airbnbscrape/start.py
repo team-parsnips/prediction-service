@@ -35,4 +35,4 @@ def scrape_predict():
   return predict(request_body)
 
 if __name__ == '__main__':
-  app.run(threaded = True, host='localhost', port='5000')
+  app.run(threaded = True, host='172.18.0.2', port='5000')
